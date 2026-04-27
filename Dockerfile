@@ -22,7 +22,7 @@ RUN cd /opt/oracle && \
     ls -la /opt/oracle/
 
 # Configurar variables de entorno de Oracle
-ENV LD_LIBRARY_PATH=/opt/oracle/instantclient_21_9:$LD_LIBRARY_PATH
+ENV LD_LIBRARY_PATH=/opt/oracle/instantclient_21_9
 ENV ORACLE_HOME=/opt/oracle/instantclient_21_9
 
 # Instalar extensión oci8

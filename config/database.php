@@ -21,12 +21,18 @@ class Database {
     }
     
     private function connect() {
-        // Obtener variables de entorno
-        $oracle_host = getenv('ORACLE_HOST') ?: 'adb.mx-queretaro-1.oraclecloud.com';
-        $oracle_port = getenv('ORACLE_PORT') ?: '1522';
-        $oracle_service = getenv('ORACLE_SERVICE') ?: 'g7d0a109709d57d_bc27bncudfcgiclb_high.adb.oraclecloud.com';
-        $oracle_user = getenv('ORACLE_USER') ?: 'ADMIN';
-        $oracle_password = getenv('ORACLE_PASSWORD') ?: '';
+        // Obtener variables de entorno (requeridas en producción)
+        $oracle_host = getenv('ORACLE_HOST');
+        $oracle_port = getenv('ORACLE_PORT');
+        $oracle_service = getenv('ORACLE_SERVICE');
+        $oracle_user = getenv('ORACLE_USER');
+        $oracle_password = getenv('ORACLE_PASSWORD');
+
+        // Validar que todas las variables estén configuradas
+        if (!$oracle_host || !$oracle_port || !$oracle_service || !$oracle_user || !$oracle_password) {
+            throw new Exception("Error: Variables de entorno de Oracle no configuradas. " .
+                "Configura ORACLE_HOST, ORACLE_PORT, ORACLE_SERVICE, ORACLE_USER, ORACLE_PASSWORD");
+        }
         
         // Crear TNS (connection string)
         $tns = "(DESCRIPTION=" .

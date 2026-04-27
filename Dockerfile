@@ -3,9 +3,11 @@ FROM php:8.1-apache
 # Instalar dependencias necesarias
 RUN apt-get update && apt-get install -y \
     libaio1 \
+    libaio-dev \
     wget \
     unzip \
     curl \
+    ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
 # Crear directorio para Oracle Instant Client
@@ -13,7 +15,8 @@ RUN mkdir -p /opt/oracle
 
 # Descargar Oracle Instant Client (versión 21.9)
 RUN cd /opt/oracle && \
-    wget -q https://download.oracle.com/otn_software/linux/instantclient/219000/instantclient-basic-linux.x64-21.9.0.0.0dbru.zip && \
+    wget https://download.oracle.com/otn_software/linux/instantclient/219000/instantclient-basic-linux.x64-21.9.0.0.0dbru.zip || \
+    (echo "Failed to download Oracle Instant Client" && exit 1) && \
     unzip -q instantclient-basic-linux.x64-21.9.0.0.0dbru.zip && \
     rm instantclient-basic-linux.x64-21.9.0.0.0dbru.zip && \
     ls -la /opt/oracle/

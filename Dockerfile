@@ -13,13 +13,13 @@ RUN apt-get update && apt-get install -y \
 # Crear directorio para Oracle Instant Client
 RUN mkdir -p /opt/oracle
 
-# Descargar Oracle Instant Client (versión 21.9)
+# Descargar Oracle Instant Client basic + SDK (necesario para compilar oci8)
 RUN cd /opt/oracle && \
-    wget https://download.oracle.com/otn_software/linux/instantclient/219000/instantclient-basic-linux.x64-21.9.0.0.0dbru.zip || \
-    (echo "Failed to download Oracle Instant Client" && exit 1) && \
+    wget https://download.oracle.com/otn_software/linux/instantclient/219000/instantclient-basic-linux.x64-21.9.0.0.0dbru.zip && \
+    wget https://download.oracle.com/otn_software/linux/instantclient/219000/instantclient-sdk-linux.x64-21.9.0.0.0dbru.zip && \
     unzip -q instantclient-basic-linux.x64-21.9.0.0.0dbru.zip && \
-    rm instantclient-basic-linux.x64-21.9.0.0.0dbru.zip && \
-    ls -la /opt/oracle/
+    unzip -q instantclient-sdk-linux.x64-21.9.0.0.0dbru.zip && \
+    rm instantclient-basic-linux.x64-21.9.0.0.0dbru.zip instantclient-sdk-linux.x64-21.9.0.0.0dbru.zip
 
 # Configurar variables de entorno de Oracle
 ENV LD_LIBRARY_PATH=/opt/oracle/instantclient_21_9

@@ -26,7 +26,7 @@ ENV LD_LIBRARY_PATH=/opt/oracle/instantclient_21_9
 ENV ORACLE_HOME=/opt/oracle/instantclient_21_9
 
 # Instalar extensión oci8
-RUN echo "instantclient,/opt/oracle/instantclient_21_9" | docker-php-ext-configure oci8 && \
+RUN docker-php-ext-configure oci8 --with-oci8=instantclient,/opt/oracle/instantclient_21_9 && \
     docker-php-ext-install oci8
 
 # Habilitar mod_rewrite para Apache

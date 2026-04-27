@@ -13,13 +13,14 @@ RUN mkdir -p /opt/oracle
 
 # Descargar Oracle Instant Client (versión 21.9)
 RUN cd /opt/oracle && \
-    wget https://download.oracle.com/otn_software/linux/instantclient/219000/instantclient-basic-linux.x64-21.9.0.0.0dbru.zip && \
-    unzip instantclient-basic-linux.x64-21.9.0.0.0dbru.zip && \
-    rm instantclient-basic-linux.x64-21.9.0.0.0dbru.zip
+    wget -q https://download.oracle.com/otn_software/linux/instantclient/219000/instantclient-basic-linux.x64-21.9.0.0.0dbru.zip && \
+    unzip -q instantclient-basic-linux.x64-21.9.0.0.0dbru.zip && \
+    rm instantclient-basic-linux.x64-21.9.0.0.0dbru.zip && \
+    ls -la /opt/oracle/
 
-# Configurar variables de entorno de Oracle ANTES de usarlas
-ENV ORACLE_HOME=/opt/oracle/instantclient_21_9
+# Configurar variables de entorno de Oracle
 ENV LD_LIBRARY_PATH=/opt/oracle/instantclient_21_9:$LD_LIBRARY_PATH
+ENV ORACLE_HOME=/opt/oracle/instantclient_21_9
 
 # Instalar extensión oci8
 RUN echo "instantclient,/opt/oracle/instantclient_21_9" | docker-php-ext-configure oci8 && \

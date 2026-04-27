@@ -2,10 +2,22 @@
 // config/database.php
 
 class Database {
+    private static $instance = null;
     private $connection;
-    
-    public function __construct() {
+
+    private function __construct() {
         $this->connect();
+    }
+
+    public static function getInstance() {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+        return self::$instance;
+    }
+
+    public static function getConnection() {
+        return self::getInstance()->connection;
     }
     
     private function connect() {
@@ -49,11 +61,7 @@ class Database {
             die("Error conectando a la base de datos: " . $e->getMessage());
         }
     }
-    
-    public function getConnection() {
-        return $this->connection;
-    }
-    
+
     public function query($sql, $params = array()) {
         $stid = oci_parse($this->connection, $sql);
         
@@ -104,6 +112,4 @@ class Database {
     }
 }
 
-// Instancia global
-$db = new Database();
 ?>

@@ -15,7 +15,7 @@ class LoginController {
 
         if (!empty($nickname) && !empty($password)) {
 
-            $usuario = $model->verificarCredenciales($nickname, $password);
+            $usuario = $model->validarCredenciales($nickname, $password);
 
             if ($usuario) {
 

@@ -29,6 +29,9 @@ ENV ORACLE_HOME=/opt/oracle/instantclient_21_9
 RUN docker-php-ext-configure oci8 --with-oci8=instantclient,/opt/oracle/instantclient_21_9 && \
     docker-php-ext-install oci8
 
+# Configurar Apache MPM (deshabilitar event, habilitar prefork para compatibilidad con PHP)
+RUN a2dismod mpm_event && a2enmod mpm_prefork
+
 # Habilitar mod_rewrite para Apache
 RUN a2enmod rewrite
 

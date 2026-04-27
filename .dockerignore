@@ -1,0 +1,13 @@
+.git
+.gitignore
+.env.local
+.env.example
+node_modules
+vendor
+.DS_Store
+*.log
+.vscode
+.idea
+composer.lock
+package-lock.json
+npm-debug.log
